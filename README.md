@@ -1,4 +1,4 @@
 GlossaryApp
 ===========
 
-This is a simple glossary application using backbone.js/require.js and connecting to a RESTful API using the PHP Slim framework.
+This is a simple glossary application built using Backbone and Require JS. It consumes a RESTful API created with the PHP Slim framework and connects to a mySql database.
