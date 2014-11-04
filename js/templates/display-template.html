@@ -1,0 +1,16 @@
+
+<div id="term-container">
+  <h1><%= acronym %></h1>
+  <h2> {&nbsp;<%= term %>&nbsp;} </h2>
+  <p> <%= description %> </p>
+  <button id="edit">EDIT</button>
+</div>
+<div id="edit-container">
+  <h4 id="edit-blank-msg" class="blank-fld-msg">Complete all fields before submitting.</h4>
+  <label for="acronym">Acronym</label><input type="text" id="edit-acronym" value="<%= acronym %>">
+  <label for="term">Term</label><input type="text" id="edit-term" value="<%= term %>">
+  <label for="description">Description</label><textarea type="text" id="edit-description"><%= description %></textarea>
+  <button id="save">SAVE</button>
+  <button id="delete">DELETE</button>
+  <button id="cancel-edit">CANCEL</button>
+</div>
