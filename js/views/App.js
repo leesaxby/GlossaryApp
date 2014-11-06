@@ -1,9 +1,9 @@
-define(['underscore', 'backbone', 'collections/terms','views/term', 'routers/routes'],
-  function(_, Backbone, TermCollection, TermView, TermRoutes) {
+define(['underscore', 'backbone', 'text!templates/app-template.html','collections/terms','views/term', 'routers/routes'],
+  function(_, Backbone, appTemp,TermCollection, TermView, TermRoutes) {
 
     var AppView = Backbone.View.extend({
 
-      el: '#glossaryapp',
+      template: _.template( appTemp ),
 
       events: {
         'click #new-term': 'newTermOpen',
@@ -21,9 +21,13 @@ define(['underscore', 'backbone', 'collections/terms','views/term', 'routers/rou
         this.listenTo(TermCollection, 'reset', this.render);
       },
       render: function() {
+        this.$el.html( this.template() )
+
         TermCollection.each(function( term ) {
           this.renderTerm( term );
         }, this)
+
+        return this;
       },
       renderTerm: function( term ) {
         var term = new TermView({model: term});
@@ -33,12 +37,15 @@ define(['underscore', 'backbone', 'collections/terms','views/term', 'routers/rou
         this.$('#new-container, #new-term, #list-container, #display-container').toggle()
       },
       addTerm: function() {
-        var complete = $('#term').val() && $('#acronym').val() && $('#description').val();
-        if( complete ) {
+        var term = this.$('#term').val(),
+            acro = this.$('#acronym').val(),
+            desc = this.$('#description').val();
+
+        if( term && acro && desc ) {
           TermCollection.create({
-            term: $.trim( $('#term').val() ),
-            acronym: $.trim( $('#acronym').val() ),
-            description: $.trim( $('#description').val() )
+            term: $.trim( term ),
+            acronym: $.trim( acro ),
+            description: $.trim( desc )
           });
           this.$('#acronym, #term, #description').val('');
           this.$('#new-container, #new-term, #list-container, #display-container').toggle();
