@@ -61,6 +61,6 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
 
     });
 
-    return AppView;
+    return new AppView;
 
 })

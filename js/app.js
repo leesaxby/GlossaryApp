@@ -17,10 +17,8 @@ require.config({
 });
 
 require(['jquery', 'underscore', 'backbone', 'views/App', 'routers/routes'],
-  function($, _, Backbone, AppView, TermRoutes) {
+  function($, _, Backbone, appView, TermRoutes) {
 
-    var appView = new AppView();
     $('#glossaryapp').html( appView.render().el );
-
 
 });
