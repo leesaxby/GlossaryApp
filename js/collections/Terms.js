@@ -5,6 +5,6 @@ define(['backbone', 'models/term'], function(Backbone, Term) {
     url: "api/terms"
   });
 
-  return new Terms;
+  return new Terms();
 
 });

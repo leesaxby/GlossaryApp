@@ -7,7 +7,7 @@ define(['backbone'], function(Backbone) {
       description: ""
     }
 
-  })
+  });
 
   return Term;
 

@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'collections/terms', 'views/displayview'],
+define(['jquery', 'underscore', 'backbone', 'collections/terms', 'views/display'],
   function($, _, Backbone, TermCollection, DisplayView) {
 
     var TermRoutes = Backbone.Router.extend({
@@ -11,13 +11,13 @@ define(['jquery', 'underscore', 'backbone', 'collections/terms', 'views/displayv
         if( routeModel ) {
           $('#display-container').html( new DisplayView({model: routeModel}).render().el );
         } else {
-          var url = window.location.href
+          var url = window.location.href;
           window.location.href = url.substr(0, url.indexOf('#'));
         }
       }
 
     });
 
-    return new TermRoutes;
+    return new TermRoutes();
 
-})
+});

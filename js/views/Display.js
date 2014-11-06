@@ -12,25 +12,26 @@ define(['jquery', 'underscore', 'backbone', 'text!templates/display-template.htm
         'click #cancel-edit': 'cancelEdit',
       },
       render: function() {
-        this.$el.html( this.template( this.model.attributes ) )
+        this.$el.html( this.template( this.model.attributes ) );
         return this;
       },
       deleteTerm: function() {
         this.model.destroy();
         this.remove();
-        $('#list-container').toggle();
         this.$('#edit-blank-msg').css('visibility', 'hidden');
-        $('#list').find('span').css('color','#afafaf');
       },
       saveTerm: function() {
-        var complete = this.$('#edit-term').val() && this.$('#edit-acronym').val() && this.$('#edit-description').val();
-        if( complete ) {
+        var term = this.$('#edit-term').val(),
+            acro = this.$('#edit-acronym').val(),
+            desc = this.$('#edit-description').val();
+
+        if( term && acro && desc ) {
           this.model.save({
-            term: $.trim( this.$('#edit-term').val() ),
-            acronym: $.trim( this.$('#edit-acronym').val() ),
-            description: $.trim( this.$('#edit-description').val() )
+            term: $.trim( term ),
+            acronym: $.trim( acro ),
+            description: $.trim( desc )
           });
-          $('#edit, #list-container').toggle();
+          $('#edit').toggle();
           this.render();
         } else {
           this.$('#edit-blank-msg').css('visibility', 'visible');
@@ -38,16 +39,14 @@ define(['jquery', 'underscore', 'backbone', 'text!templates/display-template.htm
       },
       editTerm: function() {
         this.$('#edit-container, #term-container, #edit').toggle();
-        $('#list-container').toggle();
       },
       cancelEdit: function() {
         this.$('#edit-container').toggle();
-        $('#list-container, #edit-blank-msg').toggle();
-        $('#list').find('span').css('color','#afafaf');
+        $('#edit-blank-msg').toggle();
       }
 
-    })
+    });
 
       return DisplayView;
 
-})
+});

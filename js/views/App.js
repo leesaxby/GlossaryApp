@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'text!templates/app-template.html','collections/terms','views/term', 'routers/routes'],
-  function(_, Backbone, appTemp,TermCollection, TermView, TermRoutes) {
+define(['underscore', 'backbone', 'text!templates/app-template.html','collections/terms','views/term', 'views/display', 'routers/routes'],
+  function(_, Backbone, appTemp,TermCollection, TermView, DisplayView, TermRoutes) {
 
     var AppView = Backbone.View.extend({
 
@@ -21,20 +21,20 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
         this.listenTo(TermCollection, 'reset', this.render);
       },
       render: function() {
-        this.$el.html( this.template() )
+        this.$el.html( this.template() );
 
         TermCollection.each(function( term ) {
           this.renderTerm( term );
-        }, this)
+        }, this);
 
         return this;
       },
       renderTerm: function( term ) {
-        var term = new TermView({model: term});
+        term = new TermView({model: term, parentView: this});
         this.$('#list').append( term.render().el );
       },
       newTermOpen: function() {
-        this.$('#new-container, #new-term, #list-container, #display-container').toggle()
+        this.$('#new-container, #new-term, #list-container, #display-container').toggle();
       },
       addTerm: function() {
         var term = this.$('#term').val(),
@@ -58,9 +58,15 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
         this.$('#new-container, #new-term, #list-container, #display-container').toggle();
         this.$('#new-blank-msg').css('visibility', 'hidden');
       },
+      displayTerm: function( model ) {
+        var displayView = new DisplayView({model: model});
+        $('#display-container').html( displayView.render().el );
+
+        TermRoutes.navigate('term/' + model.attributes.id);
+      }
 
     });
 
-    return new AppView;
+    return AppView;
 
-})
+});
