@@ -59,9 +59,12 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
         this.$('#new-blank-msg').css('visibility', 'hidden');
       },
       displayTerm: function( model ) {
-        var displayView = new DisplayView({model: model});
-        $('#display-container').html( displayView.render().el );
-
+        if(this.displayView) {
+          this.displayView.remove();
+          this.displayView = null;
+        }
+        this.displayView = new DisplayView({model: model});
+        $('#display-container').html( this.displayView.render().el );
         TermRoutes.navigate('term/' + model.attributes.id);
       }
 
