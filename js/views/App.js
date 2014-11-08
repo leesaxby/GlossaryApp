@@ -13,10 +13,11 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
       initialize: function() {
         TermCollection.fetch({
           reset: true,
-          success: function() {
-            Backbone.history.start();
-          }
         });
+
+
+        this.termRoutes = new TermRoutes({appView: this});
+        Backbone.history.start();
         this.listenTo(TermCollection, 'add', this.renderTerm);
         this.listenTo(TermCollection, 'reset', this.render);
       },
@@ -65,7 +66,7 @@ define(['underscore', 'backbone', 'text!templates/app-template.html','collection
         }
         this.displayView = new DisplayView({model: model});
         $('#display-container').html( this.displayView.render().el );
-        TermRoutes.navigate('term/' + model.attributes.id);
+        this.termRoutes.navigate('term/' + model.attributes.id);
       }
 
     });

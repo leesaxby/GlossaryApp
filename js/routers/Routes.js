@@ -6,10 +6,13 @@ define(['jquery', 'underscore', 'backbone', 'collections/terms', 'views/display'
       routes: {
         'term/:id': 'setFilter'
       },
+      initialize: function( app ) {
+        this.appView = app.appView;
+      },
       setFilter: function( id ) {
         var routeModel = TermCollection.get({id: id});
         if( routeModel ) {
-          $('#display-container').html( new DisplayView({model: routeModel}).render().el );
+          this.appView.displayTerm(routeModel);
         } else {
           var url = window.location.href;
           window.location.href = url.substr(0, url.indexOf('#'));
@@ -18,6 +21,6 @@ define(['jquery', 'underscore', 'backbone', 'collections/terms', 'views/display'
 
     });
 
-    return new TermRoutes();
+    return TermRoutes;
 
 });
